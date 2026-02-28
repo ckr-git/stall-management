@@ -48,10 +48,10 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .exceptionHandling(exception -> exception
                 .authenticationEntryPoint((request, response, authException) -> {
-                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                     response.setCharacterEncoding("UTF-8");
-                    response.getWriter().write(objectMapper.writeValueAsString(Result.error(403, "未登录或登录已过期")));
+                    response.getWriter().write(objectMapper.writeValueAsString(Result.error(401, "未登录或登录已过期")));
                 })
                 .accessDeniedHandler((request, response, accessDeniedException) -> {
                     response.setStatus(HttpServletResponse.SC_FORBIDDEN);
@@ -66,8 +66,8 @@ public class SecurityConfig {
                 .requestMatchers("/stall/list", "/stall/{id}", "/stall/available").permitAll()
                 .requestMatchers("/announcement/list", "/announcement/{id}").permitAll()
                 .requestMatchers("/stall-type/list").permitAll()
-                // 管理员接口
-                .requestMatchers("/admin/**").hasRole("ADMIN")
+                // 管理员接口（如 /user/admin/**、/stall/admin/**）
+                .requestMatchers("/*/admin/**").hasRole("ADMIN")
                 // 其他接口需要认证
                 .anyRequest().authenticated()
             )

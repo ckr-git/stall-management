@@ -96,7 +96,7 @@ class SecurityIntegrationTest {
     @DisplayName("C1-无Token访问受保护接口")
     void testAccessWithoutToken() throws Exception {
         mockMvc.perform(get("/user/profile"))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
     
     @Test
@@ -105,7 +105,7 @@ class SecurityIntegrationTest {
     void testAccessWithMalformedToken() throws Exception {
         mockMvc.perform(get("/user/profile")
                 .header("Authorization", "InvalidFormat token"))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
     
     // ========== C2: 权限控制测试 ==========

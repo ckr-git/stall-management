@@ -200,11 +200,11 @@ class StallControllerTest {
     @DisplayName("权限测试-未登录访问管理接口")
     void testAdminEndpoint_Unauthorized() throws Exception {
         Stall stall = createTestStall();
-        
+
         mockMvc.perform(post("/stall/admin")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(stall)))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
     
     private Stall createTestStall() {

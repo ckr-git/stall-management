@@ -87,7 +87,7 @@ class UserControllerTest {
     @DisplayName("获取个人资料-未登录")
     void testGetProfile_Unauthorized() throws Exception {
         mockMvc.perform(get("/user/profile"))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
     
     @Test
@@ -246,7 +246,7 @@ class UserControllerTest {
     @DisplayName("权限测试-未登录访问管理接口")
     void testAdminEndpoint_Unauthorized() throws Exception {
         mockMvc.perform(get("/user/admin/list"))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
     
     @Test

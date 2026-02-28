@@ -133,7 +133,7 @@ class AuthControllerTest {
     @DisplayName("未登录访问受保护接口")
     void testAccessProtectedEndpoint_Unauthorized() throws Exception {
         mockMvc.perform(get("/auth/info"))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
     
     @Test
